@@ -27,6 +27,7 @@
 import csv
 import os
 import time
+from DataStructures.Queue import queue as q
 from DataStructures.List import array_list as lt
 # TODO Importar las librerías correspondientes para el manejo de pilas y colas
 
