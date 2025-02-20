@@ -19,7 +19,7 @@ def enqueue(my_queue, element):
 
 def dequeue(my_queue):
     if is_empty(my_queue):
-        raise EmpyStructureError("queue is empty")
+        raise EmptyStructureError("queue is empty")
     return al.remove_first(my_queue)
 
 
