@@ -1,27 +1,27 @@
-from DataStructures.List import single_linked_list as sl
+from DataStructures.List import array_list as al
 
 class EmptyStructureError(Exception):
     pass
 
 def new_stack():
-    return sl.new_list()
+    return al.new_list()
 
 def push(my_stack, element):
-    sl.add_last(my_stack, element)
+    al.add_last(my_stack, element)
     return my_stack
 
 def pop(my_stack):
-    if sl.is_empty(my_stack):
+    if al.is_empty(my_stack):
         raise EmptyStructureError("stack is empty")
-    return sl.remove_last(my_stack)
+    return al.remove_last(my_stack)
 
 def is_empty(my_stack):
-    return sl.is_empty(my_stack)
+    return al.is_empty(my_stack)
 
 def top(my_stack):
-    if sl.is_empty(my_stack):
+    if al.is_empty(my_stack):
         raise EmptyStructureError("stack is empty")
-    return sl.get_first(my_stack)
+    return al.get_first(my_stack)
 
 def size(my_stack):
-    return sl.size(my_stack)
+    return al.size(my_stack)
