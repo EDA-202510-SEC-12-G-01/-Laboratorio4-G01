@@ -133,33 +133,32 @@ def get_books_stack_by_user(catalog, user_id):
     Retorna una pila con los libros que un usuario tiene por leer.
     """
     books_stack = st.new_stack()
-    i = 0
-    while i < lt.size(catalog['books_to_read']):
-        if catalog["books_to_read"][i]["user_id"] == user_id:
-            st.push(books_stack, catalog["books_to_read"][i])
-
-        i += 1
+    for i in range(0, lt.size(catalog['books_to_read'])):
+        book_to_read = lt.get_element(catalog['books_to_read'], i)
+        if book_to_read['user_id'] == user_id:
+            st.push(books_stack, book_to_read)
     
     return books_stack
-
 
 def get_user_position_on_queue(catalog, user_id, book_id):
     """
     Retorna la posición de un usuario en la cola para leer un libro.
     """
-    ecn = False
     queue = q.new_queue()
-    for i in range(0,lt.size(catalog['books_to_read'])):
-        if book_id == catalog['books_to_read'][i]['book_id']:
-            q.enqueue(queue, catalog['books_to_read'][i])
+    for i in range(0, lt.size(catalog['books_to_read'])):
+        book_to_read = lt.get_element(catalog['books_to_read'], i)
+        if book_to_read['book_id'] == book_id:
+            q.enqueue(queue, book_to_read)
+    
     position = 0
-    while position < q.size(queue) or ecn != True:
-        if q.peek(queue)['user_id'] == user_id: #peek revisa el primer dato
+    while not q.is_empty(queue):
+        if q.peek(queue)['user_id'] == user_id:  # peek revisa el primer dato
             return position
         q.dequeue(queue)
         position += 1
 
-    return position
+    return -1  # Retorna -1 si el usuario no está en la cola
+
 
 # Funciones para agregar informacion al catalogo
 
