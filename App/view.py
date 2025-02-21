@@ -64,8 +64,8 @@ def load_data(control):
 
 
 def print_books_to_read(results):
-    # TODO Imprimir los libros por leer
-    pass
+    print(results)
+
 
 
 def print_tests_results(queue_results, stack_results):
@@ -121,7 +121,9 @@ def main():
 
             result = logic.get_user_position_on_queue(
                 control, int(user_id), int(book_id))
-            # TODO Imprimir la posición del usuario en la cola
+            result = logic.get_user_position_on_queue(control, int(user_id), int(book_id))
+            print(result)
+
 
         elif int(inputs[0]) == 4:
             size = input("Indique tamaño de la muestra: ")
