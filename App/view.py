@@ -68,6 +68,7 @@ def print_books_to_read(results):
 
 
 
+
 def print_tests_results(queue_results, stack_results):
     """
     Imprime los resultados de las pruebas de rendimiento
@@ -122,6 +123,7 @@ def main():
             result = logic.get_user_position_on_queue(
                 control, int(user_id), int(book_id))
             result = logic.get_user_position_on_queue(control, int(user_id), int(book_id))
+            print("Posición en la cola: ")
             print(result)
 
 
