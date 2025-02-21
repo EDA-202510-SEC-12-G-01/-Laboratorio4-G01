@@ -34,9 +34,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from DataStructures.Queue import queue as q
 from DataStructures.List import array_list as lt
 from DataStructures.Stack import stack as st
-from DataStructures.Queue import queue as q
 
-data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
+data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'Data')
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -87,7 +86,7 @@ def load_books(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = data_dir + 'Goodreads/books.csv'
+    booksfile = os.path.join(data_dir, 'Goodreads', 'books.csv')
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for book in input_file:
         add_book(catalog, book)
@@ -98,7 +97,7 @@ def load_tags(catalog):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
     """
-    tagsfile = data_dir + 'Goodreads/tags.csv'
+    tagsfile = os.path.join(data_dir, 'Goodreads', 'tags.csv')
     input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
     for tag in input_file:
         add_tag(catalog, tag)
@@ -109,7 +108,7 @@ def load_books_tags(catalog):
     """
     Carga la información que asocia tags con libros.
     """
-    bookstagsfile = data_dir + 'Goodreads/book_tags-small.csv'
+    bookstagsfile = os.path.join(data_dir, 'Goodreads', 'book_tags-small.csv')
     input_file = csv.DictReader(open(bookstagsfile, encoding='utf-8'))
     for booktag in input_file:
         add_book_tag(catalog, booktag)
@@ -120,10 +119,10 @@ def load_books_to_read(catalog):
     """
     Carga la información del archivo to_read y los agrega a la lista de libros por leer
     """
-    bookstagsfile = data_dir + 'Goodreads/to_read.csv'
-    input_file = csv.DictReader(open(bookstagsfile, encoding='utf-8'))
-    for booktag in input_file:
-        add_book_tag(catalog, booktag)
+    to_read_file = os.path.join(data_dir, 'Goodreads', 'to_read.csv')
+    input_file = csv.DictReader(open(to_read_file, encoding='utf-8'))
+    for book_to_read in input_file:
+        add_book_to_read(catalog, book_to_read)
     return books_to_read_size(catalog)
 
 # Funciones de consulta sobre el catálogo
@@ -256,8 +255,8 @@ def new_book_tag(tag_id, book_id, count):
 
 def new_book_to_read(user_id, book_id):
     """
-    Esta estructura crea una relación entre un tag y
-    los libros que han sido marcados con dicho tag.
+    Esta estructura crea una relación entre un usuario y
+    los libros que tiene por leer.
     """
     book_to_read = {'user_id': user_id, 'book_id': book_id}
     return book_to_read
@@ -370,16 +369,24 @@ def measure_stack_performance(catalog):
 
     # Medir push
     start_time = get_time()
-    # TODO Implementar la medición de tiempo para la operación push
+    for pos in range(lt.size(catalog["book_sublist"])):
+        book = lt.get_element(catalog["book_sublist"], pos)
+        st.push(stack, book)
+    end_time = get_time()
+    push_time = delta_time(start_time, end_time)
 
     # Medir top
     start_time = get_time()
-    # TODO Implementar la medición de tiempo para la operación top
+    top = st.top(stack)
     end_time = get_time()
     top_time = delta_time(start_time, end_time)
 
-    # Medir dequeue
-    # TODO Implementar la medición de tiempo para la operación pop
+    # Medir pop
+    start_time = get_time()
+    while not st.is_empty(stack):
+        st.pop(stack)
+    end_time = get_time()
+    pop_time = delta_time(start_time, end_time)
 
     return {
         "push_time": push_time,
